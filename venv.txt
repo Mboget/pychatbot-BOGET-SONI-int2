@@ -1,0 +1,3 @@
+Créer : python -m venv venv
+Activer : venv\Scripts\activate
+Désactiver : deactivate
