@@ -1,9 +1,9 @@
-# 🎮 Nom du Projet
+# 🎮 Pychat bot
 
 --- 
 
 ## 📌 Description du Projet
-
+Création d'un bot codé en python
 ---
 
 ## 🚀 Fonctionnalités Principales
@@ -63,11 +63,7 @@ python src/main.py
 
 ## 🎨 Captures d'Écran (à ajouter)
 
-Ajoute ici des images du jeu :
-
-* Écran d'accueil
-* Gameplay
-* Menu
+Ajoute ici des images du bot :
 
 ---
 
@@ -85,7 +81,7 @@ Ajoute ici un diagramme ou une explication.
 
 ## 📌 À propos
 
-* **Auteurs :** Mathieu BOGET & ...
+* **Auteurs :** Mathieu BOGET & Kavani SONI
 * **Encadrant :** …
 * **Année universitaire :** P1-INT at EFREI - Grande Ecole du numérique 
 
