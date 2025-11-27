@@ -1,1 +1,1 @@
-print("Hello World")
+#################################  Game entry point, coordinates execution #################################
