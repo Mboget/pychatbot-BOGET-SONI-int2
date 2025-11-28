@@ -1,4 +1,6 @@
 ################################# Creation and management of the player #################################
+from src.universe.house import House 
+from src.utils.input_utils import ask_choice
 
 class Character:
     def __init__(self, last_name:str, first_name:str, attributes:dict):
@@ -23,7 +25,26 @@ class Character:
         assert key in ['inventory','spells']
         self.key.append(item) # type: ignore
 
-"""
+
+    def house_choice(self,questions):
+        houses = ["Gryffindor","Slytherin","Hufflepuff","Ravenclaw"]
+        houses_score = {
+                "Gryffindor" : self.attributes["courage"]**2,
+                "Slytherin" : self.attributes["ambition"]**2,
+                "Hufflepuff" : self.attributes["loyalty"]**2,
+                "Ravenclaw" : self.attributes["intelligence"]**2
+        }
+
+        for question in questions:
+
+            score_house = ask_choice(question[0],question[1])
+            name_house = houses[score_house] # type: ignore
+            houses_score[name_house] += score_house
+
+        return houses_score
+
+
+
 mes_attribues = {
     "courage" : 8,
     "intelligence" : 8,
@@ -31,6 +52,28 @@ mes_attribues = {
     "ambition" : 8
 }
 perso = Character("BOGET","Mathieu",mes_attribues)
-perso.display_character()
+#perso.display_character()
+
+
+questions = [
+ ( "You see a friend in danger. What do you do?",
+ ["Rush to help", "Think of a plan", "Seek help", "Stay calm and observe"],
+ ["Gryffindor", "Slytherin", "Hufflepuff", "Ravenclaw"]),
+
+ ( "Which trait describes you best?",
+ ["Brave and loyal", "Cunning and ambitious", "Patient and hardworking", "Intelligent and curious"],
+ ["Gryffindor", "Slytherin", "Hufflepuff", "Ravenclaw"]),
+
+ ( "When faced with a difficult challenge, you...",
+ ["Charge in without hesitation", "Look for the best strategy", "Rely on your friends",
+ "Analyze the problem"],
+ ["Gryffindor", "Slytherin", "Hufflepuff", "Ravenclaw"])
+
+]
+
+print(perso.house_choice(questions))
+
+
 """
-    
+Pour executer : python -m src.universe.character
+"""

@@ -39,6 +39,10 @@ def ask_number(message:str,min_val:int,max_val:int)->int:
 
     # Ask the user for a number
     number_str = input(message)
+    
+    if number_str == '' or number_str.isspace():
+        print(f'Enter an integer')
+        return ask_number(message,min_val,max_val)
 
     try:
         # Try to convert the input to an integer
@@ -115,7 +119,7 @@ def ask_choice(message: str, options: list) -> str:
         return ask_choice(message, options)
 
     # If the number is within the bounds, return the chosen option
-    return options[choice - 1]
+    return choice - 1 # type: ignore
 
 """
 choices = ["Yes","No","JSPA"]
