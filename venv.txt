@@ -1,3 +1,4 @@
 Créer : python -m venv venv 
 Activer : venv\Scripts\activate
 Désactiver : deactivate
+Copier les modules installé sur le venv : pip freeze > requirements.txt

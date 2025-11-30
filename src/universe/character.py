@@ -3,13 +3,14 @@ from src.universe.house import House
 from src.utils.input_utils import ask_choice
 
 class Character:
-    def __init__(self, last_name:str, first_name:str, attributes:dict):
+    def __init__(self, last_name:str, first_name:str, attributes:dict, money = 100, inventory = [], spells = [], house = []):
         self.last_name = last_name
         self.first_name = first_name
-        self.money = 100
-        self.inventory = []
-        self.spells = []
+        self.money = money
+        self.inventory = inventory
+        self.spells = spells
         self.attributes = attributes.copy() #pour éviter les bugs liés à la référence
+        self.house = house
 
     def display_character(self):
         print(f"Character profile: ")
@@ -23,8 +24,12 @@ class Character:
 
     def add_item(self,key,item): 
         assert key in ['inventory','spells']
-        self.key.append(item) # type: ignore
-
+        if key == 'inventory':
+            self.inventory.append(item) # type: ignore
+        elif key == 'spells':
+            self.spells.append(item)
+        else : 
+            print("NIKTAMERE sale caca")
 
     def house_choice(self,questions):
         houses = ["Gryffindor","Slytherin","Hufflepuff","Ravenclaw"]
@@ -71,7 +76,7 @@ questions = [
 
 ]
 
-print(perso.house_choice(questions))
+#print(perso.house_choice(questions))
 
 
 """

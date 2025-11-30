@@ -54,3 +54,6 @@ pytest_cache/
 
 # --- Fichier exe propre ---
 faire_.exe_propre.md
+
+# --- Dossier sauvegarde partie ---
+src/chapters/sauvegarde

@@ -2,6 +2,62 @@
 
 import os
 import json
+import time
+import sys 
+
+def affichage_lettre_par_lettre(texte,speed=0.001,end='\n'):
+    for letter in texte:
+        print(letter, end='', flush=True)
+        time.sleep(speed)
+    print(end)
+
+def affichage_lettre_par_lettre_avec_input(texte,speed=0.001):
+    for lettre in texte:
+        print(lettre,end='',flush=True)
+        time.sleep(speed)
+    user_input = input()
+
+    return user_input
+
+def wait_for_enter():
+    """
+    Attend la touche Enter sans afficher ce que tape l'utilisateur.
+    Compatible Windows / Linux / macOS.
+    """
+
+    if os.name == "nt":  
+        # -----------------------
+        #   WINDOWS VERSION
+        # -----------------------
+        import msvcrt
+        while True:
+            if msvcrt.kbhit():
+                key = msvcrt.getwch()
+                if key == '\r':  # Enter
+                    print()
+                    return
+                # On ignore toutes les autres touches
+    else:
+        # -----------------------
+        #  UNIX (Linux / macOS)
+        # -----------------------
+        import termios
+        import tty
+
+        fd = sys.stdin.fileno()
+        old_settings = termios.tcgetattr(fd)
+
+        try:
+            tty.setraw(fd)  # mode brut, rien n'est affiché
+            while True:
+                ch = sys.stdin.read(1)
+                if ch == '\r' or ch == '\n':  # Enter sur Unix
+                    print()
+                    return
+                # On ignore toutes les autres touches
+        finally:
+            termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
+
 
 def ask_text(message:str)->str:
     """
@@ -14,9 +70,9 @@ def ask_text(message:str)->str:
         str: The input text 
     """
 
-    text = input(message)
+    text = affichage_lettre_par_lettre_avec_input(message)
     # Check if the user entered an empty string or a string of whitespace characters
-    if  text == '' or text.isspace():
+    if  text == '' or text == ' '*len(text):
         return ask_text(f"{message}")
     # Remove leading and trailing whitespace characters
     res = text.strip()
@@ -38,10 +94,10 @@ def ask_number(message:str,min_val:int,max_val:int)->int:
     """
 
     # Ask the user for a number
-    number_str = input(message)
+    number_str = affichage_lettre_par_lettre_avec_input(message)
     
-    if number_str == '' or number_str.isspace():
-        print(f'Enter an integer')
+    if number_str == '' or number_str == " "*len(number_str):
+        affichage_lettre_par_lettre(f'Enter an integer')
         return ask_number(message,min_val,max_val)
 
     try:
@@ -49,7 +105,7 @@ def ask_number(message:str,min_val:int,max_val:int)->int:
         number = int(number_str)
     except ValueError:
         # If the input is not an integer, print an error message and ask again
-        print(f"Please enter a integer")
+        affichage_lettre_par_lettre(f"Please enter a integer")
         return ask_number(message,min_val,max_val)
 
     # Check if the number is within the bounds
@@ -61,7 +117,7 @@ def ask_number(message:str,min_val:int,max_val:int)->int:
         # If there is no minimum bound, check if the number is lower than the maximum bound
         if number > max_val:
             # If the number is greater than the maximum bound, print an error message and ask again
-            print(f"Please enter a number lower than {max_val}.")
+            affichage_lettre_par_lettre(f"Please enter a number lower than {max_val}.")
             return ask_number(message,min_val,max_val)
         # If the number is within the bounds, return it
         return number
@@ -70,7 +126,7 @@ def ask_number(message:str,min_val:int,max_val:int)->int:
         # If there is no maximum bound, check if the number is greater than the minimum bound
         if number < min_val:
             # If the number is lower than the minimum bound, print an error message and ask again
-            print(f"Please enter a number greater than {min_val}.")
+            affichage_lettre_par_lettre(f"Please enter a number greater than {min_val}.")
             return ask_number(message,min_val,max_val)
         # If the number is within the bounds, return it
         return number
@@ -79,7 +135,7 @@ def ask_number(message:str,min_val:int,max_val:int)->int:
         # If there are both minimum and maximum bounds, check if the number is within them
         if number < min_val or number > max_val:
             # If the number is not within the bounds, print an error message and ask again
-            print(f"Please enter a number between {min_val} and {max_val}.")
+            affichage_lettre_par_lettre(f"Please enter a number between {min_val} and {max_val}.")
             return ask_number(message,min_val,max_val)
         # If the number is within the bounds, return it
         return number
@@ -98,24 +154,24 @@ def ask_choice(message: str, options: list) -> str:
         str: The chosen option.
     """
 
-    print(message)
+    affichage_lettre_par_lettre(message)
 
     for i in range(len(options)):
-        print(f"{i+1}. {options[i]}")
+        affichage_lettre_par_lettre(f"{i+1}. {options[i]}")
 
-    choice_str = input("Your choice: ")
+    choice_str = affichage_lettre_par_lettre_avec_input("Your choice: ")
 
     try:
         # Try to convert the input to an integer
         choice = int(choice_str)
     except ValueError:
         # If the input is not an integer, print an error message and ask again
-        print(f"Please enter the number and not the text")
+        affichage_lettre_par_lettre(f"Please enter the number and not the text")
         return ask_choice(message, options)
 
     # Check if the number is within the bounds
     if choice < 1 or choice > len(options):
-        print(f"Please enter a choice between 1 and {len(options)}")
+        affichage_lettre_par_lettre(f"Please enter a choice between 1 and {len(options)}")
         return ask_choice(message, options)
 
     # If the number is within the bounds, return the chosen option
@@ -124,8 +180,8 @@ def ask_choice(message: str, options: list) -> str:
 """
 choices = ["Yes","No","JSPA"]
 message = "Quelle est la capitale de la France" 
-print(ask_choice(message,choices))
-"""
+print(ask_choice(message,choices))"""
+
 
 
 def load_file(file_path:str)->dict:
@@ -147,3 +203,10 @@ def load_file(file_path:str)->dict:
     with open(file_path,'r') as f1:
         return json.load(f1)
     
+
+#print(load_file("src/data/inventory.json"))
+
+def bold(text):
+    return f"\033[1m{text}\033[0m"
+
+print(bold("Hogwarts Letter"))
