@@ -227,7 +227,7 @@ def buy_supplies(character:Character):
         item_attempt_buy = affichage_lettre_par_lettre_avec_input("Enter the number of the item to buy: ")
 
         while contenu_diagon_alley[item_attempt_buy][1] > character.money: 
-            affichage_lettre_par_lettre("Remenber you're broke bro choose an other item...")
+            affichage_lettre_par_lettre("Remember you're broke bro choose an other item...")
             item_attempt_buy = affichage_lettre_par_lettre_avec_input("Enter the number of the item to buy: ")
 
 
