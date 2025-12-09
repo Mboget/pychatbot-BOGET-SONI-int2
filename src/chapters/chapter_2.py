@@ -10,7 +10,7 @@
 
 from universe.character import display_character
 
-from src.utils.input_utils import load_file
+from src.utils.input_utils import load_file,ask_choice
 
 print("journey to hogwarts: chapter 2")
 
@@ -80,6 +80,42 @@ def sorting(character, questions):
     ]
     print("\nThe sorting ceremony begins in the Great Hall...")
     print("The Sorting Hat observes you for a long time before asking its questions:")
+
+
+    house_scores = {
+        "Gryffindor": 0,
+        "Slytherin": 0,
+        "Hufflepuff": 0,
+        "Ravenclaw": 0
+    }
+
+    #  ATTRIBUTE INFLUENCE: Add points based on character attributes (x2)
+
+    attributes = character.attributes
+
+    house_scores["Gryffindor"] += attributes.get('courage', 0) * 2
+    house_scores["Slytherin"] += attributes.get('ambition', 0) * 2
+    house_scores["Hufflepuff"] += attributes.get('loyalty', 0) * 2
+    house_scores["Ravenclaw"] += attributes.get('intelligence', 0) * 2
+
+    for question_text, options, house_assignments in questions:
+
+        chosen_option = ask_choice(question_text, options)
+
+        chosen_index = options.index(chosen_option)
+        assigned_house = house_assignments[chosen_index]
+        house_scores[assigned_house] += 3
+
+        print("\nSummary of scores:")
+    for house, score in house_scores.items():
+        print(f"{house}: {score} points")
+
+    max_score = max(house_scores.values())
+    winning_houses = [house for house, score in house_scores.items() if score == max_score]
+    final_house_name = winning_houses[0]
+    character.house.nom = final_house_name
+    print(f"\nThe Sorting Hat exclaims: **{final_house_name.upper()}!!!**")
+    print(f"You join the {final_house_name} students to loud cheers!")
 
 
 def enter_common_room(character):
