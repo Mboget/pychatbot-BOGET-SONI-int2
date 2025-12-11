@@ -217,24 +217,36 @@ def buy_supplies(character:Character):
     
     item_bought = []
 
-    while required_items != [] and character.money > 0:
-
+    # Buy only required items: present only required items as choices
+    while required_items and character.money > 0:
         affichage_lettre_par_lettre(f"You have {character.money} Galleons.")
-        affichage_lettre_par_lettre("Remaining required items: ",end='')
-        for item in required_items:
-            affichage_lettre_par_lettre(f"{item}, ",end=' ')
+        affichage_lettre_par_lettre("Remaining required items:")
 
-        item_attempt_buy = affichage_lettre_par_lettre_avec_input("Enter the number of the item to buy: ")
+        # Build list of required entries that are still needed
+        list_required = [(key, val) for key, val in contenu_diagon_alley.items() if val[2] == "required" and val[0] in required_items]
 
-        while contenu_diagon_alley[item_attempt_buy][1] > character.money: 
-            affichage_lettre_par_lettre("Remember you're broke bro choose an other item...")
-            item_attempt_buy = affichage_lettre_par_lettre_avec_input("Enter the number of the item to buy: ")
+        if not list_required:
+            break
 
+        # Filter affordable required items
+        affordable = [entry for entry in list_required if entry[1][1] <= character.money]
+        if not affordable:
+            # Can't afford any required item -> will trigger game over after loop
+            break
 
-        character.money -= contenu_diagon_alley[item_attempt_buy][1]
-        item_bought.append(contenu_diagon_alley[item_attempt_buy][0])
-        if contenu_diagon_alley[item_attempt_buy][0] in required_items:
-            required_items.remove(contenu_diagon_alley[item_attempt_buy][0])
+        # Prepare display options and ask the player which required item to buy
+        options = [f"{val[0]} - {val[1]} Galleons" for _, val in affordable]
+        choice_idx = ask_choice("Which required item do you want to buy?", options)
+
+        # Map back to the selected item
+        selected_key, selected_val = affordable[choice_idx] # type: ignore
+        price = selected_val[1]
+
+        # Perform purchase
+        character.money -= price
+        item_bought.append(selected_val[0])
+        if selected_val[0] in required_items:
+            required_items.remove(selected_val[0])
 
     if required_items != []: 
         texte = """

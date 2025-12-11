@@ -107,6 +107,8 @@ def convertisseur_str_to_integer(s: str) -> int:
     
     # Gère le signe négatif
     negative = False
+    if not s:
+        raise ValueError("La chaîne est vide")
     if s[0] == '-':
         negative = True
         s = s[1:]
@@ -245,7 +247,7 @@ def load_file(file_path:str)->dict:
         return {"error": "Chemin n'existe pas"}
 
     # Open the file and load the JSON data.
-    with open(file_path,'r') as f1:
+    with open(file_path,'r', encoding='utf-8') as f1:
         return json.load(f1)
     
 
@@ -264,12 +266,12 @@ def charger_personnage(file_path= "src/chapters/sauvegardes/sauvegarde_donnees_p
     last_name = content['Last name']
     first_name = content['First name']
     attributes = {
-        'cougage':content['Courage level'],
-        'intelligence' : content['Intelligence level'],
-        'loyality' : content['Loyalty level'],
-        'ambition' : content['Ambition level']
+        'courage': int(content['Courage level']),
+        'intelligence' : int(content['Intelligence level']),
+        'loyalty' : int(content['Loyalty level']),
+        'ambition' : int(content['Ambition level'])
                   }
-    money = content['Money']
+    money = int(content['Money'])
     inventory = content['Inventory']
     spells = content['Spells']
     house = content['House']

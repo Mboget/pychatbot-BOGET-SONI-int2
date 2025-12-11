@@ -68,24 +68,31 @@ def magic_quiz(character:Character,file_path = 'src/data/quiz_magie.json'):
     """
     affichage_lettre_par_lettre(texte)
 
-    with open(file_path,'r') as quiz:
+    with open(file_path,'r', encoding='utf-8') as quiz:
         content = json.load(quiz)
 
-    quiz = []
-    for question,reponse in content.items():
-        quiz.append((question,reponse))
-    
-    question_reponse_quiz = sample(quiz,4)
+    # content is expected to be a list of {"question":..., "answer":...}
+    quiz_items = []
+    for item in content:
+        q = item.get('question')
+        a = item.get('answer')
+        if q is not None and a is not None:
+            quiz_items.append((q, a))
+
+    # pick 4 random questions (or fewer if not enough)
+    nb = min(4, len(quiz_items))
+    question_reponse_quiz = sample(quiz_items, nb)
 
     for question, reponse in question_reponse_quiz:
         texte = question
         reponse_user = affichage_lettre_par_lettre_avec_input(texte)
 
-        if reponse_user == reponse : 
+        # Normalize comparison (case-insensitive, stripped)
+        if reponse_user and reponse_user.strip().lower() == str(reponse).strip().lower():
             character.house.ajout_point(25)
             texte = f"Correct answer, +25 points for {character.house.nom}"
             affichage_lettre_par_lettre(texte)
-        else : 
+        else:
             texte = f"Wrong answer. The correct answer was: {reponse}"
             affichage_lettre_par_lettre(texte)
 

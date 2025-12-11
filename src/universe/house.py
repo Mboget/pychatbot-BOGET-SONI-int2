@@ -7,12 +7,14 @@ class House:
         self.nombre_point = 0
     
     def ajout_point(self,nombre_point_ajouter):
+        nombre_point_avant = self.nombre_point
         self.nombre_point += nombre_point_ajouter
-    
+        print(f"The house {self.nom} has now {self.nombre_point}")
+
     def afficher_point(self):
         return (f"Maison {self.nom}: {self.nombre_point} points")
     
-test = [House("Gryffindor"),House("Slytherin"),House("Hufflepuff"),House("Ravenclaw")]    
+houses = [House("Gryffindor"),House("Slytherin"),House("Hufflepuff"),House("Ravenclaw")]    
 
 def display_winning_houses(houses):
     max_nombre_point = houses[0].nombre_point
