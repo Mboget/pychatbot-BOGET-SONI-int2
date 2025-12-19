@@ -5,7 +5,7 @@ import json
 import time
 import sys 
 
-def affichage_lettre_par_lettre(texte,speed=0.01,end='\n'):
+def affichage_lettre_par_lettre(texte,speed=0.1,end='\n'):
     for letter in texte:
         print(letter, end='', flush=True)
         time.sleep(speed)
