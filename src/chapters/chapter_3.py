@@ -23,8 +23,7 @@ def learn_spells(character, file_path="src/data/spells.json"):
     utility_spells = []
 
     for spell in content:   
-        #print(spell)
-
+ 
         if spell["type"] == "Utility":
             utility_spells.append(spell)
         if spell["type"] == "Defensive":
@@ -71,7 +70,6 @@ def magic_quiz(character:Character,file_path = 'src/data/quiz_magie.json'):
     with open(file_path,'r', encoding='utf-8') as quiz:
         content = json.load(quiz)
 
-    # content is expected to be a list of {"question":..., "answer":...}
     quiz_items = []
     for item in content:
         q = item.get('question')
@@ -79,7 +77,6 @@ def magic_quiz(character:Character,file_path = 'src/data/quiz_magie.json'):
         if q is not None and a is not None:
             quiz_items.append((q, a))
 
-    # pick 4 random questions (or fewer if not enough)
     nb = min(4, len(quiz_items))
     question_reponse_quiz = sample(quiz_items, nb)
 
@@ -87,7 +84,6 @@ def magic_quiz(character:Character,file_path = 'src/data/quiz_magie.json'):
         texte = question
         reponse_user = affichage_lettre_par_lettre_avec_input(texte)
 
-        # Normalize comparison (case-insensitive, stripped)
         if reponse_user and reponse_user.strip().lower() == str(reponse).strip().lower():
             character.house.ajout_point(25)
             texte = f"Correct answer, +25 points for {character.house.nom}"
@@ -97,15 +93,6 @@ def magic_quiz(character:Character,file_path = 'src/data/quiz_magie.json'):
             affichage_lettre_par_lettre(texte)
 
 def start_chapter_3(perso:Character):
-    """
-    This function is the entry point of the game's third chapter.
-    It checks if the save file exists, and if not, it creates a new one.
-    It then opens the save file and loads the JSON data.
-    It iterates over the JSON data to find the third chapter that has not been completed.
-    It then calls the corresponding function to start the chapter.
-    """
-
-    # Check if the file exists at the given path.
     if not os.path.isfile("src/chapters/sauvegardes/sauvegarde_chapter_3.json"): 
         data = {
             "1" : {"learn_spells": False}, # type: ignore
@@ -115,14 +102,12 @@ def start_chapter_3(perso:Character):
         with open("src/chapters/sauvegardes/sauvegarde_chapter_3.json","w",encoding="utf-8") as j1:
             json.dump(data,j1,ensure_ascii=False,indent=4)
 
-    # Open the file and load the JSON data.
     with open("src/chapters/sauvegardes/sauvegarde_chapter_3.json",'r',encoding="utf-8") as f1:
         content = json.load(f1)
 
     chaptire_en_cours = None 
     trouve = False 
 
-    # Iterate over the JSON data to find the first chapter that has not been completed.
     for key,val in content.items():
         for key2,val2 in val.items():
             if val2 == False and not trouve:  # type: ignore
@@ -133,7 +118,6 @@ def start_chapter_3(perso:Character):
         affichage_lettre_par_lettre("You have to do the history in the right order !")
         exit()
 
-    # Call the corresponding function to start the chapter.
     match chaptire_en_cours:
         case "learn_spells":
             learn_spells(perso)
