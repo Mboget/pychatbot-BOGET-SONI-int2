@@ -1,7 +1,18 @@
+# journey to hogwarts: chapter 2
+# tasks:
+# import modules: no
+# meeting friends: yes
+# welcome message: yes
+# Sorting ceremony in the Great Hall: no
+# Player's installation in their common room according to their house : yes
+# Display of complete information about the player's character to summarize the end of the chapter: yes
+# Display of a message confirming the end of the chapter and announcing the start of classes at Hogwarts: yes
 
 from src.universe.character import Character
 
 from src.utils.input_utils import load_file,ask_choice,affichage_lettre_par_lettre,charger_personnage
+
+print("journey to hogwarts: chapter 2")
 
 def meet_friends(character):
     print()
@@ -50,6 +61,7 @@ def meet_friends(character):
         print(f" - {attr}: {value}")
 
 
+# Sorting ceremony:
 def sorting(character):
     questions = [
         (
@@ -78,6 +90,8 @@ def sorting(character):
         "Hufflepuff": 0,
         "Ravenclaw": 0
     }
+
+    #  ATTRIBUTE INFLUENCE: Add points based on character attributes (x2)
 
     attributes = character.attributes
 
@@ -113,11 +127,14 @@ def enter_common_room(character):
     if player_house and player_house in houses_data:
         house_info = houses_data[player_house]
 
+        # Display description
         print(f"\nDescription of the {player_house} Common Room:")
         print(house_info.get('description', 'A majestic common room.'))
 
+        # Display welcome message
         print(house_info.get('welcome_message', f"Welcome to the noble House of {player_house}."))
 
+        # Display house colors
         colors = ", ".join(house_info.get('colors', ['unknown']))
         print(f"Your house colors: {colors}")
     else:
@@ -137,6 +154,7 @@ def start_chapter_2(character):
     sorting(character)
     enter_common_room(character)
 
+    #end of ch 2
     print(f"End of ch 2 {character.house.nom} student")
     print("="*50)
 
