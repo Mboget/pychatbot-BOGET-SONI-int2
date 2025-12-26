@@ -25,4 +25,3 @@ def display_winning_houses(houses):
             max_nombre_point = house.nombre_point
     return str(nom_max_nombre_point)[1:-1].replace("'","")
     
-#print(display_winning_houses(test))

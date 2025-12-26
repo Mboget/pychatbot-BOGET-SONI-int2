@@ -1,25 +1,48 @@
-# 🎮 Hogwats Game
+# 🪄 Hogwarts Game
 
---- 
-
-## 📌 Description du Projet
-Creation of a game based on the univers of Hogwarts and Harry Potter. 
----
-
-## 🚀 Fonctionnalités Principales
+🎮 **Hogwarts Game** is a narrative game inspired by **the first part of the first book of _Harry Potter_: _Harry Potter and the Philosopher’s Stone_**.  
+Dive into the magical world of Hogwarts through an **interactive**, **choice-based**, and **text-driven** adventure, playable directly in the terminal.
 
 ---
 
-## 🛠️ Technologies Utilisées
-Python 
+## 📖 Project Description
+
+This project consists of creating a **branching narrative game** set in the **Harry Potter universe**.  
+The player takes on the role of a young wizard and progresses through multiple chapters, where each choice influences the story.
+
+🧙‍♀️ The game is **entirely terminal-based** and focuses on:
+- narrative immersion,
+- character customization,
+- story progression through player decisions.
+
+---
+
+## 🚀 Main Features
+
+- 🧙‍♂️ **Choice-based gameplay**
+- 📚 **Multi-chapter storyline**
+- 🧾 **Character creation and progression**
+- 💾 **Save and load system**
+- 🏰 **Hogwarts universe integration**
+- 💻 **100% terminal-based interface**
+
+---
+
+## 🛠️ Technologies Used
+
+- 🐍 **Python**
+
+
 --- 
 
-## 📂 Structure du Projet
+## 📂 Project Structure
 
 ```
 📁 projet
  ├── 📁 src
  |    ├── 📁 chapters
+ |    |    ├── 📁 test_chapitre
+ |    |    |    ├── test_all_chapters.py
  |    |    ├── 📁 sauvegardes
  |    |    |    ├── sauvegarde_donnees_personnage.json
  |    |    |    ├── sauvegarde_chapter_1.json
@@ -58,16 +81,16 @@ Python
 
 ---
 
-## ▶️ Installation & Exécution
+## ▶️ Installation & Execution
 
-### **1. Cloner le projet**
+### **1️⃣ Clone the project**
 
 ```bash
-git clone https://github.com/Mboget/python_project_EFREI_S1.git
-cd projet
+git clone https://github.com/Mboget/hogwats-BOGET-SONI-int2.git
+cd hogwats-BOGET-SONI-int2
 ```
 
-### **2. Créer un environnement virtuel (optionnel mais fortement recommandé)**
+### **2️⃣ Create a virtual environment (optional but strongly recommended)**
 
 ```bash
 python -m venv venv
@@ -75,42 +98,78 @@ source venv/bin/activate   # Linux / Mac
 venv\Scripts\activate      # Windows
 ```
 
-### **3. Installer les dépendances**
+### **3️⃣ Install dependencies**
 
 ```bash
 pip install -r requirements.txt
 ```
 
-### **4. Lancer le jeu**
+### **4️⃣ Run the game**
 
+- 🐧 On linux : 
 ```bash
-python src/main.py
+python3 -m src/main
+```
+
+- On Windows : 
+```bash
+python -m src/main
 ```
 
 ---
 
-## 🎨 Captures d'Écran (à ajouter)
+## 🎨 Screenshots
 
-Ajoute ici des images des dialogues dans le terminal de commande :
+Some extracts from the game running in the terminal:
 
+![Dialogue dans le terminal](assets/images/README/Debut.png)
 ---
 
-## 🧠 Organisation du Développement
+## Development Organization
 
-### Méthodologie
+### 🔧 Methodology
 
-Explique comment le projet a été structuré (Git, branches, sprints…).
+The project was developed using Git for version control and collaboration.
+It is organized into several branches:
 
-### Schéma de fonctionnement (si utile)
+ - main branch: stable and functional version,
 
-Ajoute ici un diagramme ou une explication.
+ - backup branch: created after an incident on the main branch,
+
+ - development branch: used to store experimental code and potential features (such as a graphical interface).
+
+### 🔁 Architecture Overview
+
+ - The project has a single entry point: main.py
+
+ - main.py redirects to menu.py, where the player chooses whether to start the game
+
+ - The game then runs through the chapters in order (1 to 4)
+
+ - The input_utils.py file centralizes utility functions:
+
+    - letter-by-letter text display,
+
+    - user choice handling,
+
+    - number input,
+
+    - save loading
+
+ - Two main classes define the game universe:
+
+    - Character
+
+    - House
 
 ---
 
 ## 📌 À propos
 
-* **Auteurs :** Mathieu BOGET & Kavani SONI
-* **Encadrant :** …
-* **Année universitaire :** P1-INT at EFREI - Grande Ecole du numérique 
+ - **👨‍💻 Authors:** Mathieu BOGET & Kavani SONI
+
+ - **👨‍🏫 Supervisor:** Gwalid
+
+ - **🎓 Academic Year:** P1-INT – EFREI, Grande École du Numérique 
 
 ---
