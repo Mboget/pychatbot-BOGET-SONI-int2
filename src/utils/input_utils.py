@@ -5,7 +5,7 @@ import json
 import time
 import sys 
 
-def affichage_lettre_par_lettre(texte,speed=0.1,end='\n'):
+def affichage_lettre_par_lettre(texte,speed=0.05,end='\n'):
     for letter in texte:
         print(letter, end='', flush=True) #Flush in coding refers to emptying the data buffer to ensure immediate output. flush=True in print( ) forces the buffer to clear immediately
         time.sleep(speed)
@@ -64,7 +64,7 @@ def wait_for_enter():
             tty.setraw(fd)  # mode brut, rien n'est affiché
             while True:
                 ch = sys.stdin.read(1)
-                if ch == '\r' or ch == '\n':  h# Enter sur Unix
+                if ch == '\r' or ch == '\n':  # Enter sur Unix
                     print()
                     return
                 # On ignore toutes les autres touches
