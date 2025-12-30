@@ -73,5 +73,10 @@ def display_score(e1, e2):
     affichage_lettre_par_lettre(f"-> {e1['name']} : {e1['score']}points")
     affichage_lettre_par_lettre(f"-> {e2['name']} : {e2['score']}points")
 
+def display_team(house, team):
+    affichage_lettre_par_lettre(f"{house} team:")
+    for player in team['players']:
+        affichage_lettre_par_lettre(f"- {player}")
+
 
 
