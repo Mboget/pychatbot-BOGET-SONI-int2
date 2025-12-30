@@ -51,4 +51,11 @@ def attempt_goal(attacking_team, defending_team, player_is_seeker=False):
         defending_team["goals_blocked"] += 1
         affichage_lettre_par_lettre("{} blocks the attack!)".format(defending_team["name"])
 
+def golden_snitch_appears():
+    snitch=random.randint(1,6)
+    if snitch == 6:
+        return True
+    else:
+        return False
+
 
