@@ -3,6 +3,7 @@ import random
 
 from src.universe.character import Character
 from src.universe.house import House
+from src.utils.input_utils import (load_file,ask_choice,affichage_lettre_par_lettre,wait_for_enter, bold,)
 
 from src.utils.input_utils import affichage_lettre_par_lettre, wait_for_enter
 
@@ -136,6 +137,34 @@ def quidditch_match(character, houses):
                     house_obj.ajout_point(500)
                     affichage_lettre_par_lettre(f"Total: {house_obj.nombre_point} points.")
 
+
+
+def start_chapter_4(character,houses):
+
+    affichage_lettre_par_lettre("CHAPTER 4: THE GOLDEN SNITCH")
+    affichage_lettre_par_lettre("-" * 50)
+    text = """The year is coming towards an end 
+    however let's finish it off with the anticipated quiditch match!!!
+    The atmosphere is cheerful.
+    Flags are waving and the students are chanting their house names.
+    You grip your broomstick tightly thrilled to be on the team"""
+
+    affichage_lettre_par_lettre(text)
+    wait_for_enter()
+
+    quidditch_match(character,houses)
+
+    affichage_lettre_par_lettre("\n" + "-" * 50)
+    affichage_lettre_par_lettre("End of Chapter 4 — What an incredible performance on the field!")
+    affichage_lettre_par_lettre("-" * 50)
+    wait_for_enter()
+
+    wining_house_name = display_winning_houses(houses)
+    affichage_lettre_par_lettre(f"\n And the winner is... {winning_house_names} ! 🏆")
+    affichage_lettre_par_lettre("\nHere is your final wizard profile:")
+    character.display_character()
+
+    affichage_lettre_par_lettre("\nThank you for playing Hogwarts!")
 
 
 
