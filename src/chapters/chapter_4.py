@@ -69,7 +69,9 @@ def catch_golden_snitch(e1, e2):
     return winner
 
 def display_score(e1, e2):
-    
+    affichage_lettre_par_lettre("/nCurrent score")
+    affichage_lettre_par_lettre(f"-> {e1['name']} : {e1['score']}points")
+    affichage_lettre_par_lettre(f"-> {e2['name']} : {e2['score']}points")
 
 
 
