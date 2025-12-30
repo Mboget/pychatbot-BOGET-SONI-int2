@@ -3,9 +3,18 @@ import random
 
 from src.universe.character import Character
 from src.universe.house import House
-from src.utils.input_utils import (load_file,ask_choice,affichage_lettre_par_lettre,wait_for_enter, bold,)
 
-from src.utils.input_utils import affichage_lettre_par_lettre, wait_for_enter
+from src.utils.input_utils import affichage_lettre_par_lettre
+from src.utils.input_utils import affichage_lettre_par_lettre_avec_input
+from src.utils.input_utils import load_file
+from src.utils.input_utils import wait_for_enter
+
+from src.utils.input_utils import charger_personnage
+from src.utils.input_utils import changer_statut_fichier_sauvegarde
+from src.universe.house import display_winning_houses, House
+from random import randint, sample
+import json
+import os
 
 
 def create_team(house_name, team_data, is_player=False, player=None):
@@ -162,7 +171,8 @@ def start_chapter_4(character,houses):
     wining_house_name = display_winning_houses(houses)
     affichage_lettre_par_lettre(f"\n And the winner is... {winning_house_names} ! 🏆")
     affichage_lettre_par_lettre("\nHere is your final wizard profile:")
-    character.display_character()
+
+    perso.display_character()
 
     affichage_lettre_par_lettre("\nThank you for playing Hogwarts!")
 
