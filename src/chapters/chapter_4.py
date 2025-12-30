@@ -3,7 +3,8 @@ import random
 
 from src.universe.character import Character
 from src.universe.house import House
-from src.utils.input_utils import affichage_lettre_par_lettre
+
+from src.utils.input_utils import affichage_lettre_par_lettre, wait_for_enter
 
 
 def create_team(house_name, team_data, is_player=False, player=None):
@@ -77,6 +78,65 @@ def display_team(house, team):
     affichage_lettre_par_lettre(f"{house} team:")
     for player in team['players']:
         affichage_lettre_par_lettre(f"- {player}")
+
+
+
+def quidditch_match(character, houses):
+    teams_data = load_file("src/data/teams_quidditch.json")
+
+    player_house_name = character.house.nom
+    possible_opponents = [name for name in teams_data.keys() if name != player_house_name]
+    opponent_house_name = random.choice(possible_opponents)
+
+    affichage_lettre_par_lettre(f"\nQuidditch Match: {player_house_name} vs {opponent_house_name}!")
+    my_team=create_team(player_house_name, teams_data[player_house_name], is_player=True, player=character)
+    opp_team = create_team(opponent_house_name, teams_data[opponent_house_name], is_player=False)
+
+    wait_for_enter()
+
+    display_team(player_house_name, my_team)
+    wait_for_enter()
+
+    print()
+    display_team(opponent_house_name, opp_team)
+
+    affichage_lettre_par_lettre(f"you are playing for {player_house_name} as a seeker")
+    match_ended_by_snitch = False
+    for turn in range(5,21):
+        affichage_lettre_par_lettre(f"/n----- turn{turn}-----")
+        attempt_goal(my_team, opp_team, player_is_seeker=True)
+        attempt_goal(opp_team, my_team, player_is_seeker=False)
+
+        display_score(my_team, opp_team)
+
+        if golden_snitch_appears():
+            winner_snitch = catch_golden_snitch(my_team, opp_team)
+            affichage_lettre_par_lettre(f"The Golden Snitch has been caught by {winner_snitch['name']}! (+150 points)")
+            match_ended_by_snitch = True
+            break
+        wait_for_enter()
+
+        affichage_lettre_par_lettre("/nEnd of match!")
+        display_score(my_team, opp_team)
+
+        winning_team_name=""
+        if my_team['score'] > opp_team['score']:
+            winning_team_name = my_team['name']
+            affichage_lettre_par_lettre(f"{winning_team_name} wins!!!")
+        elif my_team['score'] < opp_team['score']:
+            winning_team_name = opp_team['name']
+            affichage_lettre_par_lettre(f"{winning_team_name} wins!!!")
+        else:
+            affichage_lettre_par_lettre("It's a TIE !!!!")
+
+        if winning_team_name:
+            affichage_lettre_par_lettre(f" +500 points to {winning_team_name}!")
+            for house_obj in houses:
+                if house_obj.name == winning_team_name:
+                    house_obj.ajout_point(500)
+                    affichage_lettre_par_lettre(f"Total: {house_obj.nombre_point} points.")
+
+
 
 
 
