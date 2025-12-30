@@ -49,13 +49,27 @@ def attempt_goal(attacking_team, defending_team, player_is_seeker=False):
         affichage_lettre_par_lettre("{} scores a goal for {}! (+10 points)".format(scorer, attacking_team["name"]))
     else:
         defending_team["goals_blocked"] += 1
-        affichage_lettre_par_lettre("{} blocks the attack!)".format(defending_team["name"])
+        affichage_lettre_par_lettre("{} blocks the attack!".format(defending_team["name"]))
 
 def golden_snitch_appears():
-    snitch=random.randint(1,6)
-    if snitch == 6:
-        return True
-    else:
-        return False
+    return random.randint(1, 6) == 6
+
+
+def catch_golden_snitch(e1, e2):
+    #e1 & e2 are dictionarries
+    winner = random.choice([e1, e2])
+    winner['score'] += 150
+    winner['caught_snitch'] = True
+
+    # Narrate the catch (Seeker is index 0)
+    seeker_name = winner['players'][0]
+    affichage_lettre_par_lettre(bold(f"\n✨ THE GOLDEN SNITCH HAS BEEN CAUGHT! ✨"))
+    affichage_lettre_par_lettre(f"{seeker_name} dives and catches it for {winner['name']}!")
+    affichage_lettre_par_lettre(f"{winner['name']} gains 150 points!")
+    return winner
+
+def display_score(e1, e2):
+    
+
 
 
