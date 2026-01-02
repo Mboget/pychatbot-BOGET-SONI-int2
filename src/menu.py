@@ -5,7 +5,7 @@
 from src.chapters.chapter_1 import start_chapter_1
 from src.chapters.chapter_2 import start_chapter_2
 from src.chapters.chapter_3 import start_chapter_3
-#from src.chapters.chapter_4 import start_chapter_4
+from src.chapters.chapter_4 import start_chapter_4
 
 from src.universe.house import House
 from src.utils.input_utils import charger_personnage
@@ -41,7 +41,7 @@ def launch_menu_choice():
 
             start_chapter_3(perso)
 
-            #start_chapter_4(perso)
+            start_chapter_4(perso,houses)
 
             print("\n🏆 FINAL HOUSE POINTS 🏆")
             for house in houses:

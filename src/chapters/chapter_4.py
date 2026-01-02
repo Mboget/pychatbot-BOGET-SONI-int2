@@ -8,7 +8,7 @@ from src.utils.input_utils import affichage_lettre_par_lettre
 from src.utils.input_utils import affichage_lettre_par_lettre_avec_input
 from src.utils.input_utils import load_file
 from src.utils.input_utils import wait_for_enter
-
+from src.utils.input_utils import bold
 from src.utils.input_utils import charger_personnage
 from src.utils.input_utils import changer_statut_fichier_sauvegarde
 from src.universe.house import display_winning_houses, House
@@ -169,10 +169,10 @@ def start_chapter_4(character,houses):
     wait_for_enter()
 
     wining_house_name = display_winning_houses(houses)
-    affichage_lettre_par_lettre(f"\n And the winner is... {winning_house_names} ! 🏆")
+    affichage_lettre_par_lettre(f"\n And the winner is... {wining_house_name} ! 🏆")
     affichage_lettre_par_lettre("\nHere is your final wizard profile:")
 
-    perso.display_character()
+    character.display_character()
 
     affichage_lettre_par_lettre("\nThank you for playing Hogwarts!")
 
