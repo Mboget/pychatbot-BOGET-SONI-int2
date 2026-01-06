@@ -2,7 +2,6 @@
 
 class House:
     def __init__(self,nom = 'Gryffindor'):
-        assert nom in ["Gryffindor","Slytherin","Hufflepuff","Ravenclaw"]
         self.nom = nom
         self.nombre_point = 0
     

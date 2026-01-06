@@ -60,20 +60,18 @@ def golden_snitch_appears():
 
 
 def catch_golden_snitch(e1, e2):
-    #e1 & e2 are dictionarries
     winner = random.choice([e1, e2])
     winner['score'] += 150
     winner['caught_snitch'] = True
 
-    # Narrate the catch (Seeker is index 0)
     seeker_name = winner['players'][0]
-    affichage_lettre_par_lettre(bold(f"\n✨ THE GOLDEN SNITCH HAS BEEN CAUGHT! ✨"))
+    affichage_lettre_par_lettre(bold(f"✨ THE GOLDEN SNITCH HAS BEEN CAUGHT! ✨"))
     affichage_lettre_par_lettre(f"{seeker_name} dives and catches it for {winner['name']}!")
     affichage_lettre_par_lettre(f"{winner['name']} gains 150 points!")
     return winner
 
 def display_score(e1, e2):
-    affichage_lettre_par_lettre("/nCurrent score")
+    affichage_lettre_par_lettre("Current score")
     affichage_lettre_par_lettre(f"-> {e1['name']} : {e1['score']}points")
     affichage_lettre_par_lettre(f"-> {e2['name']} : {e2['score']}points")
 
@@ -85,19 +83,25 @@ def display_team(house, team):
 
 
 def quidditch_match(character, houses):
-    teams_data = load_file("src/data/teams_quidditch.json")
+    teams_data = load_file("src/data/equipes_quidditch.json")
 
     player_house_name = character.house.nom
-    possible_opponents = [name for name in teams_data.keys() if name != player_house_name]
-    opponent_house_name = random.choice(possible_opponents)
 
-    affichage_lettre_par_lettre(f"\nQuidditch Match: {player_house_name} vs {opponent_house_name}!")
+    possible_opponents = []
+
+    for name in teams_data.keys():
+        
+        if name != player_house_name:
+            possible_opponents.append(name)
+
+    opponent_house_name = random.choice(possible_opponents)
+    affichage_lettre_par_lettre(f"Quidditch Match: {player_house_name} vs {opponent_house_name}!")
+
     my_team=create_team(player_house_name, teams_data[player_house_name], is_player=True, player=character)
     opp_team = create_team(opponent_house_name, teams_data[opponent_house_name], is_player=False)
 
-    wait_for_enter()
-
     display_team(player_house_name, my_team)
+    affichage_lettre_par_lettre(f"Press enter to continue")
     wait_for_enter()
 
     print()
@@ -106,7 +110,7 @@ def quidditch_match(character, houses):
     affichage_lettre_par_lettre(f"you are playing for {player_house_name} as a seeker")
     match_ended_by_snitch = False
     for turn in range(5,21):
-        affichage_lettre_par_lettre(f"/n----- turn{turn}-----")
+        affichage_lettre_par_lettre(f"----- turn {turn - 4}-----")
         attempt_goal(my_team, opp_team, player_is_seeker=True)
         attempt_goal(opp_team, my_team, player_is_seeker=False)
 
@@ -116,28 +120,33 @@ def quidditch_match(character, houses):
             winner_snitch = catch_golden_snitch(my_team, opp_team)
             affichage_lettre_par_lettre(f"The Golden Snitch has been caught by {winner_snitch['name']}! (+150 points)")
             match_ended_by_snitch = True
+            winning_team_name = winner_snitch['name']
+            wait_for_enter()
             break
+
+        affichage_lettre_par_lettre(f"Press enter to continue")
         wait_for_enter()
 
-        affichage_lettre_par_lettre("/nEnd of match!")
-        display_score(my_team, opp_team)
+    # Fin du match (après toutes les manches ou si la snitch a été attrapée)
+    affichage_lettre_par_lettre("End of match!")
+    display_score(my_team, opp_team)
 
-        winning_team_name=""
-        if my_team['score'] > opp_team['score']:
-            winning_team_name = my_team['name']
-            affichage_lettre_par_lettre(f"{winning_team_name} wins!!!")
-        elif my_team['score'] < opp_team['score']:
-            winning_team_name = opp_team['name']
-            affichage_lettre_par_lettre(f"{winning_team_name} wins!!!")
-        else:
-            affichage_lettre_par_lettre("It's a TIE !!!!")
+    winning_team_name = ""
+    if my_team['score'] > opp_team['score']:
+        winning_team_name = my_team['name']
+        affichage_lettre_par_lettre(f"{winning_team_name} wins!!!")
+    elif my_team['score'] < opp_team['score']:
+        winning_team_name = opp_team['name']
+        affichage_lettre_par_lettre(f"{winning_team_name} wins!!!")
+    else:
+        affichage_lettre_par_lettre("It's a TIE !!!!")
 
-        if winning_team_name:
-            affichage_lettre_par_lettre(f" +500 points to {winning_team_name}!")
-            for house_obj in houses:
-                if house_obj.name == winning_team_name:
-                    house_obj.ajout_point(500)
-                    affichage_lettre_par_lettre(f"Total: {house_obj.nombre_point} points.")
+    if winning_team_name:
+        affichage_lettre_par_lettre(f" +500 points to {winning_team_name}!")
+        for house_obj in houses:
+            if house_obj.nom == winning_team_name:
+                house_obj.ajout_point(500)
+                affichage_lettre_par_lettre(f"Total: {house_obj.nombre_point} points.")
 
 
 
@@ -145,13 +154,15 @@ def start_chapter_4(character,houses):
 
     affichage_lettre_par_lettre("CHAPTER 4: THE GOLDEN SNITCH")
     affichage_lettre_par_lettre("-" * 50)
-    text = """The year is coming towards an end 
-    however let's finish it off with the anticipated quiditch match!!!
-    The atmosphere is cheerful.
-    Flags are waving and the students are chanting their house names.
-    You grip your broomstick tightly thrilled to be on the team"""
+    text = """
+The year is coming towards an end 
+however let's finish it off with the anticipated quiditch match!!!
+The atmosphere is cheerful.
+Flags are waving and the students are chanting their house names.
+You grip your broomstick tightly thrilled to be on the team"""
 
     affichage_lettre_par_lettre(text)
+    affichage_lettre_par_lettre(f"Press enter to continue")
     wait_for_enter()
 
     quidditch_match(character,houses)
@@ -163,12 +174,16 @@ def start_chapter_4(character,houses):
 
     wining_house_name = display_winning_houses(houses)
     affichage_lettre_par_lettre(f"\n And the winner is... {wining_house_name} ! 🏆")
-    affichage_lettre_par_lettre("\nHere is your final wizard profile:")
+    affichage_lettre_par_lettre("Here is your final wizard profile:")
 
     character.display_character()
 
-    affichage_lettre_par_lettre("\nThank you for playing Hogwarts!")
+    affichage_lettre_par_lettre("Thank you for playing Hogwarts!")
 
 
+if __name__ == "__main__":
+    perso = charger_personnage()
 
+    houses = houses = [House("Gryffindor"),House("Slytherin"),House("Hufflepuff"),House("Ravenclaw")]
+    start_chapter_4(perso,houses)
 
