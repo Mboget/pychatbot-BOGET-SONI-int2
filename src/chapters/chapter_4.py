@@ -1,4 +1,3 @@
-#Guided scenario: Quidditch match
 import random
 
 from src.universe.character import Character
@@ -109,8 +108,8 @@ def quidditch_match(character, houses):
 
     affichage_lettre_par_lettre(f"you are playing for {player_house_name} as a seeker")
     match_ended_by_snitch = False
-    for turn in range(5,21):
-        affichage_lettre_par_lettre(f"----- turn {turn - 4}-----")
+    for turn in range(1,21):
+        affichage_lettre_par_lettre(f"----- turn {turn}-----")
         attempt_goal(my_team, opp_team, player_is_seeker=True)
         attempt_goal(opp_team, my_team, player_is_seeker=False)
 
@@ -127,7 +126,6 @@ def quidditch_match(character, houses):
         affichage_lettre_par_lettre(f"Press enter to continue")
         wait_for_enter()
 
-    # Fin du match (après toutes les manches ou si la snitch a été attrapée)
     affichage_lettre_par_lettre("End of match!")
     display_score(my_team, opp_team)
 
