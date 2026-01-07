@@ -47,7 +47,7 @@ def meet_friends(character):
 
     affichage_lettre_par_lettre("Your updated attributes are:")
     for attr, value in character.attributes.items():
-        print(f" - {attr}: {value}")
+        affichage_lettre_par_lettre(f" - {attr}: {value}")
 
 
 def sorting(character):
@@ -92,20 +92,20 @@ def sorting(character):
         assigned_house = house_assignments[chosen_index] # type: ignore
         house_scores[assigned_house] += 3
 
-    print("\nSummary of scores:")
+    affichage_lettre_par_lettre("Summary of scores:")
     for house, score in house_scores.items():
-        print(f"{house}: {score} points")
+        affichage_lettre_par_lettre(f"{house}: {score} points")
 
     max_score = max(house_scores.values())
     winning_houses = [house for house, score in house_scores.items() if score == max_score]
     final_house_name = winning_houses[0]
     character.house.nom = final_house_name
-    print(f"\nThe Sorting Hat exclaims: **{final_house_name.upper()}!!!**")
-    print(f"You join the {final_house_name} students to loud cheers!")
+    affichage_lettre_par_lettre(f"The Sorting Hat exclaims: **{final_house_name.upper()}!!!**")
+    affichage_lettre_par_lettre(f"You join the {final_house_name} students to loud cheers!")
 
 
 def enter_common_room(character):
-    print("\nYou follow the prefects through the castle corridors...")
+    affichage_lettre_par_lettre("\nYou follow the prefects through the castle corridors...")
     houses_data = load_file("src/data/houses.json")
 
     player_house = character.house.nom
@@ -113,21 +113,21 @@ def enter_common_room(character):
     if player_house and player_house in houses_data:
         house_info = houses_data[player_house]
 
-        print(f"\nDescription of the {player_house} Common Room:")
-        print(house_info.get('description', 'A majestic common room.'))
+        affichage_lettre_par_lettre(f"Description of the {player_house} Common Room:")
+        affichage_lettre_par_lettre(house_info.get('description', 'A majestic common room.'))
 
-        print(house_info.get('welcome_message', f"Welcome to the noble House of {player_house}."))
+        affichage_lettre_par_lettre(house_info.get('welcome_message', f"Welcome to the noble House of {player_house}."))
 
         colors = ", ".join(house_info.get('colors', ['unknown']))
-        print(f"Your house colors: {colors}")
+        affichage_lettre_par_lettre(f"Your house colors: {colors}")
     else:
-        print("\nCould not find information for your house. Something is wrong!")
+        affichage_lettre_par_lettre("Could not find information for your house. Something is wrong!")
 
 
 def welcome_message():
-    print("Welcome, new students! Before the feast, I must say a few words.")
-    print("Nitwit! Blubber! Oddment! Tweak!")
-    print("Now, let the feast begin and the Sorting Ceremony commence!")
+    affichage_lettre_par_lettre("Welcome, new students! Before the feast, I must say a few words.")
+    affichage_lettre_par_lettre("Nitwit! Blubber! Oddment! Tweak!")
+    affichage_lettre_par_lettre("Now, let the feast begin and the Sorting Ceremony commence!")
     input()
 
 def start_chapter_2(character):
@@ -137,11 +137,11 @@ def start_chapter_2(character):
     sorting(character)
     enter_common_room(character)
 
-    print(f"End of ch 2 {character.house.nom} student")
-    print("="*50)
+    affichage_lettre_par_lettre(f"End of ch 2 {character.house.nom} student")
+    affichage_lettre_par_lettre("="*50)
 
     character.display_character()
-    print("\nEnd of Chapter 2! Classes begin tomorrow. Your adventure continues...")
+    affichage_lettre_par_lettre("End of Chapter 2! Classes begin tomorrow. Your adventure continues...")
 
 
 if __name__ == "__main__":
