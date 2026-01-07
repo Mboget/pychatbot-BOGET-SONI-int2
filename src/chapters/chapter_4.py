@@ -19,7 +19,7 @@ import os
 
 def create_team(house_name, team_data, is_player=False, player=None):
 
-    players_list = team_data["players"].copy()
+    players_list = team_data["players"][:]
 
     if is_player and player:
         player_display_name = f"{player.first_name} {player.last_name} (Seeker)"
