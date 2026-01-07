@@ -7,7 +7,7 @@ import sys
 
 def affichage_lettre_par_lettre(texte,speed=0.05,end='\n'):
     for letter in texte:
-        print(letter, end='', flush=True) #Flush in coding refers to emptying the data buffer to ensure immediate output. flush=True in print( ) forces the buffer to clear immediately
+        print(letter, end='', flush=True)
         time.sleep(speed)
     print(end)
 
@@ -27,21 +27,16 @@ def changer_statut_fichier_sauvegarde(file_path,nom_fonction):  #
 
         content[nom_fonction] = True
 
-        with open(file_path,'w',encoding='utf-8'): # represents characters in one-, two-, three-, or four-byte units. Python uses UTF-8 by default
+        with open(file_path,'w',encoding='utf-8'):
             json.dump(content,file_path,ensure_ascii=False,indent=4)
     except FileNotFoundError:
         return('Error : file not found')
 
 def wait_for_enter():
-    """
-    Attend la touche Enter sans afficher ce que tape l'utilisateur.
-    Compatible Windows / Linux / macOS.
-    """
+
 
     if os.name == "nt":  
-        # -----------------------
-        #   WINDOWS VERSION
-        # -----------------------
+
         import msvcrt
         while True:
             if msvcrt.kbhit():
@@ -51,9 +46,6 @@ def wait_for_enter():
                     return
 
     else:
-        # -----------------------
-        #  UNIX (Linux / macOS)
-        # -----------------------
         import termios
         import tty
 
@@ -73,15 +65,7 @@ def wait_for_enter():
 
 
 def ask_text(message:str)->str:
-    """
-    Ask the user for a text input with optional validation.
 
-    Args:
-        message (str): The message to display to the user.
-
-    Returns:
-        str: The input text 
-    """
 
     text = affichage_lettre_par_lettre_avec_input(message)
  
@@ -178,7 +162,7 @@ def ask_choice(message: str, options: list) -> str:
         affichage_lettre_par_lettre(f"Please enter a choice between 1 and {len(options)}")
         return ask_choice(message, options)
 
-    return choice - 1 # type: ignore
+    return choice - 1
 
 
 def load_file(file_path:str)->dict:
